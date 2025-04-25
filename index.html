@@ -41,17 +41,11 @@
 </head>
 
 <body>
-<h1>Matriarch Global Settings Editor</h1>
+<h1>Arturia DrumBrute Impact Editor</h1>
 <p>
-    This is a settings editor for the <a href="https://www.moogmusic.com/products/matriarch">Moog Matriarch</a>
-    synthesizer. It uses the SysEx messages introduced in the v1.2.0 firmware update to read/write the settings.
-    Please refer to the Moog Matriarch
-    <a href="https://api.moogmusic.com/sites/default/files/2020-09/Matriarch_V1.2.0_Firmware_Notes.pdf">
-        v1.2.0 Firmware Notes PDF </a>
-    for more details.
-    The <a href="https://github.com/mreid/matriarch-editor">source code is available on GitHub</a> along
-    with more details.
-    It is made available with no warranty or guarantees, and is in no way affiliated with Moog Music.
+    This is a settings editor for the <a href="https://www.arturia.com/products/hardware-synths/drumbrute-impact/overview">Arturia DrumBrute Impact</a>
+    synthesizer.
+    It is made available with no warranty or guarantees, and is in no way affiliated with Arturia.
     <strong>Use at your own risk!</strong>.
 </p>
 <p>
@@ -65,15 +59,15 @@
     appropriate extensions.</li>
 </ul>
 <p>
-    When this page is loaded, the MIDI API will look for any MIDI In/Out devices with the word "Matriarch"
+    When this page is loaded, the MIDI API will look for any MIDI In/Out devices with the word "Impact"
     in their name and connect to the first of these that is found. Once connected, the global settings are
     scanned. Each of the 74 settings in the table below will switch from a grey to white background if a
-    value is successfully read from the connected Matriarch.
+    value is successfully read from the connected DrumBrute.
 </p>
 <p>
     Use the selection boxes or sliders to select a new value from the list. The factory defaults are indicated
-    with the text "(Default)", along with any explanatory notes. When a new value is selected it is immediate
-    sent to the Matriarch. The row for the setting will turn grey and then white again indicated that the value
+    with the text "(Default)", along with any explanatory notes. When a new value is selected it is immediately
+    sent to the DrumBrute. The row for the setting will turn grey and then white again indicated that the value
     was successfully updated.
 </p>
 <p>
@@ -81,52 +75,14 @@
     documented default value. They are marked in the list (this was found with firmware 1.2.3).
 </p>
 <p>
-    This editor was developed over a weekend by Mark Reid.
+    This editor is a fork of <a href="https://github.com/mreid/matriarch-editor">Mark Reid's editor for the Moog Matriarch</a>
     If you like it, please check out some of the music he has made using the Matriarch on
     <a href="https://twitter.com/mdreid">Twitter</a>,
     <a href="https://www.instagram.com/mdreid/">Instagram</a>,
     <a href="https://www.youtube.com/user/mdreid/videos">YouTube</a>,
     and <a href="https://soundcloud.com/mdreid-1">SoundCloud</a>.
 </p>
-<ul>
-    <li><em>2020-10-04</em>: Initial Release</li>
-    <li>
-        <em>2020-12-29</em>:
-        Better retries, highlighting of non-default settings, and update to 1.2.3 SysEx messages
-        <a href="https://github.com/mreid/matriarch-editor/pull/1">added</a> by
-        <a href="https://github.com/algesten">Martin Algesten</a>
-    </li>
-    <li>
-        <em>2022-04-08</em>:
-        Improved ranges and selectors for PPQN and arp/swing 
-        <a href="https://github.com/mreid/matriarch-editor/pull/3">added</a> by 
-        <a href="https://github.com/faqteur">Quentin Lamerand</a> 
-    </li>
-    <li>
-       <em>2022-11-07</em>:
-       Added instructions for resolving "Matriarch Not Found!" errors.
-    </li>
-    <li>
-       <em>2023-03-18</em>:
-       Support for MIDI velocity curves in firmware 1.3.0
-       <a href="https://github.com/mreid/matriarch-editor/pull/5">added</a> by 
-       <a href="https://github.com/dangerous">David Rainsford</a>
-    </li>
-    <li>
-       <em>2024-01-21</em>:
-       Incorrect values and sign inconsistencies in some parameters
-       <a href="https://github.com/mreid/matriarch-editor/pull/7">fixed</a> by 
-       <a href="https://github.com/randomrun42">Chris</a>
-    </li>
-</ul>
 <hr/>
-<div id="midiEngineStatus">
-    <strong>MIDI-Out</strong>: <span id="midiOutName">NONE</span>
-    <strong>MIDI-In</strong>: <span id="midiInName">NONE</span>
-    <div id="midiError"></div>
-    <p><em>(If the "Connot find Matriarch!" error persists, access this page via https (not http), i.e., go to
-    <a href="https://mark.reid.name/matriarch-editor/">https://mark.reid.name/matriarch-editor/</a>)</em></p>
-</div>
 <table id="parameters">
     <thead>
     <tr>

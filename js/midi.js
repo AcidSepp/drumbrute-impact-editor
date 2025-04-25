@@ -9,9 +9,14 @@ var params_waiting = {};
 async function open_midi_out() {
     midi_out = undefined;
     $('#midiOutName').html('No Connection');
-    midi_out = JZZ({sysex:true}).openMidiOut(/Matriarch/)
-        .or(function(){ $('#midiOutName').html('Cannot find Matriarch!'); })
-        .and(function(){ $('#midiOutName').html(this.name()); console.log(this.info()); });
+    midi_out = JZZ({sysex: true}).openMidiOut(/Impact/)
+        .or(function () {
+            $('#midiOutName').html('Cannot find DrumBrute Impact!');
+        })
+        .and(function () {
+            $('#midiOutName').html(this.name());
+            console.log(this.info());
+        });
     try {
         await midi_out;
         return true;
@@ -24,9 +29,14 @@ async function open_midi_out() {
 async function open_midi_in() {
     midi_in = undefined;
     $('#midiInName').html('No Connection');
-    midi_in = JZZ({sysex:true}).openMidiIn(/Matriarch/)
-        .or(function(){ $('#midiInName').html('Cannot find Matriarch!'); })
-        .and(function(){ $('#midiInName').html(this.name()); console.log(this.info());})
+    midi_in = JZZ({sysex: true}).openMidiIn(/Impact/)
+        .or(function () {
+            $('#midiInName').html('Cannot find DrumBrute Impact!');
+        })
+        .and(function () {
+            $('#midiInName').html(this.name());
+            console.log(this.info());
+        })
         .connect(update_param);
     try {
         await midi_in;
@@ -38,34 +48,31 @@ async function open_midi_in() {
 }
 
 async function update_param(msg) {
-    if(msg.isSysEx()) {
-        let param_id = msg[4];
-        params_waiting[param_id] = false;
-        let param_str = 'param_' + param_id;
+    if (msg.isSysEx()) {
+        if (msg.length === 12) {
+            let param_id = msg[9];
+            params_waiting[param_id] = false;
+            let param_str = 'param_' + param_id;
 
-        let msb = msg[5];
-        let lsb = msg[6];
-        let value = 128 * msb + lsb;
+            let value = msg[10]
 
-        $('#'+param_str).val(value);
-        const row = $('#row_'+param_id);
-        row.removeClass('disabled').find('select,input').prop('disabled', false);
-        row[0].update_defaultness();
-        console.log('Set Parameter' + param_id + ' to ' + value);
+            $('#' + param_str).val(value);
+            const row = $('#row_' + param_id);
+            row.removeClass('disabled').find('select,input').prop('disabled', false);
+            row[0].update_defaultness();
+            console.log('Set Parameter ' + param_id + ' to ' + value);
+        }
     }
 }
 
 
 function set_param(param_id, value) {
-    let msb = 0;
-    let lsb = value;
-    if(value > 128) { msb = parseInt(value / 128); lsb = value % 128; }
-    let msg = [0xf0, 0x04, 0x17, 0x23, param_id, msb, lsb, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7f, 0xf7]
+    let msg = [0xf0, 0x0, 0x20, 0x6b, 0x7f, 0x42, 0x2, 0x0, 0x41, param_id, value, 0xf7]
     midi_out.send(msg);
 }
 
 function read_param(param_id) {
-    let msg = [0xf0, 0x04, 0x17, 0x3e, param_id, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7f, 0xf7]
+    let msg = [0xf0, 0x0, 0x20, 0x6b, 0x7f, 0x42, 0x1, 0x0, 0x41, param_id, 0xf7]
     console.log('Sending read request for Parameter ' + param_id);
     params_waiting[param_id] = true;
     midi_out.send(msg);
@@ -81,7 +88,7 @@ function is_waiting_for(param_id) {
 
 async function scan_midi(param_ids, wait_ms) {
     await sleep(500);
-    for(let param_id of param_ids) {
+    for (let param_id of param_ids) {
         read_param(param_id);
         await sleep(wait_ms);
     }
