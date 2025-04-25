@@ -1,8 +1,3 @@
-function Value(id, name) {
-    this.id = id;
-    this.name = name;
-}
-
 function Param(id, name, values, notes) {
     this.id = id;
     this.name = name;
@@ -23,12 +18,6 @@ function Param(id, name, values, notes) {
             }
         }
     })
-}
-
-function Slider(start, end, default_value) {
-    let input = $("<input/>", {class: "custom-range", type: "range", tooltip: "always", min: start, max: end, disabled: true});
-    input[0].default_value = default_value;
-    return input;
 }
 
 function Options(values, default_value, default_note) {
@@ -54,7 +43,7 @@ let params = [
     new Param(0x6, "MIDI Channel", Options(Range(0, 15), 0)),
     new Param(0x10, "Clock In/Out Settings", Options(["1_PULSE", "2PULSE", "24PPQ", "48PPQ"], 2)),
     new Param(0x11, "Auto Sync", Options(["Off", "On"], 1)),
-    new Param(0x21, "Tap Tempo", Options(["1", "2", "3", "4"], 2)),
+    new Param(0x12, "Tap Tempo", Options(["1", "2", "3", "4"], 2)),
     new Param(0x13, "Global BPM", Options(["Off", "On"], 1)),
     new Param(0x16, "Wait to Load Pattern", Options(["Off", "On"], 1)),
     new Param(0x20, "Accent Velocity Threshold", Options(Range(0, 127), 1)),
